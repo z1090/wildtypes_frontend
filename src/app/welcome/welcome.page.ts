@@ -7,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WelcomePage implements OnInit {
 
-  constructor() { }
+  logo: string;
+
+  constructor() {
+  }
 
   ngOnInit() {
+    this.logo = '/assets/logo.svg';
   }
 
 }

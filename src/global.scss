@@ -24,3 +24,23 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+
+h1 {
+    font-family: 'Didot';
+    font-size: 3rem;
+}
+
+.small-logo {
+    width: 4rem;
+    margin: 0.5rem;
+}
+
+.btn {
+    width: 12rem;
+    height: 2rem;
+
+    font-size: 1.125rem;
+
+    --border-radius: 1rem;
+}

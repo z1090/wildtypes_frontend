@@ -4,7 +4,7 @@
       <ion-back-button defaultHref="/sightings"></ion-back-button>
     </ion-buttons>
     <ion-buttons slot="primary" *ngIf="!isloading && sighting && sighting.userId === authUserId">
-      <ion-button routerLink="/sightings/edit">
+      <ion-button [routerLink]="['/', 'sightings', 'edit', sighting.id]">
         <ion-icon slot="icon-only" name="create"></ion-icon>
       </ion-button>
     </ion-buttons>

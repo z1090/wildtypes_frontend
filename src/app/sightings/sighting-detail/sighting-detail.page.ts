@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Sighting } from '../sighting.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SightingsService } from '../sightings.service';
 import { NavController, AlertController, Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
@@ -25,6 +25,7 @@ export class SightingDetailPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private navCtrl: NavController,
     private alertCtrl: AlertController,
+    private router: Router,
     ) { }
 
   ngOnInit() {
@@ -55,6 +56,10 @@ export class SightingDetailPage implements OnInit {
 
   searchVisibleToggle() {
     this.searchVisible = !this.searchVisible;
+  }
+
+  onEdit(sightingId: string) {
+    this.router.navigate(['/', 'sightings', 'edit', sightingId]);
   }
 
 }

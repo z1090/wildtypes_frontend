@@ -44,7 +44,7 @@
     <ion-row *ngIf="!shownSightings || shownSightings.length === 0" style="flex-grow: 1;">
       <ion-col class="centered-h centered-v flex-dir-col ion-text-center">
         <ion-img class="plus-icon" [src]="plusSvg"></ion-img>
-        <ion-button class="btn" color="secondary" fill="outline" routerLink="/sightings">Add a new contribution</ion-button>
+        <ion-button class="btn" color="secondary" fill="outline" routerLink="/sightings/new">Add a new contribution</ion-button>
       </ion-col>
     </ion-row>
     <ion-row *ngIf="shownSightings && shownSightings.length > 0">

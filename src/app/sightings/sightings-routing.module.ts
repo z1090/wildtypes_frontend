@@ -13,7 +13,7 @@ const routes: Routes = [
     loadChildren: () => import('./new-sighting/new-sighting.module').then( m => m.NewSightingPageModule)
   },
   {
-    path: 'edit',
+    path: 'edit/:sightingId',
     loadChildren: () => import('./edit-sighting/edit-sighting.module').then( m => m.EditSightingPageModule)
   },
   {

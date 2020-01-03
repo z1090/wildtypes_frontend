@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { take, map, tap, delay, filter, switchMap } from 'rxjs/operators';
 
 
@@ -123,6 +123,66 @@ export class SightingsService {
             mapImage: sighting.location.mapImage
           },
           sighting.photo
+        );
+      })
+    );
+  }
+
+  addSighting(
+    typefaceName: string,
+    certainty: number,
+    businessName: string,
+    category: string,
+    useageRating: number,
+    location: SightingLocation,
+    photo: string
+  ) {
+    let idFromDB: string;
+    const newSighting = new Sighting(
+      'tempId',
+      this.authService.userId,
+      new Date(),
+      typefaceName,
+      certainty,
+      businessName,
+      category,
+      useageRating,
+      location,
+      photo
+    );
+    return this.http.post<SightingDBData>(this.databaseURL, {...newSighting, id: null})
+    .pipe(switchMap(resData => {
+      idFromDB = resData._id;
+      return this.sightings;
+    }),
+      take(1),
+      tap(sightings => {
+        newSighting.id = idFromDB;
+        this._sightings.next(sightings.concat(newSighting));
+      })
+    );
+  }
+
+  // editSighting(sightingUpdates: Sighting) {
+  editSighting(sightingUpdates: any, sightingId: string) {
+    return this.sightings.pipe(
+      take(1),
+      switchMap(sightings => {
+        if (!sightings || sightings.length <= 0) {
+          return this.fetchSightings();
+        } else {
+          return of(sightings);
+        }
+      }),
+      tap(sightings => {
+        const sightingIndex = sightings.findIndex(sighting => sighting.id === sightingUpdates.id);
+        const editedSightingArr = sightings.map((sighting, i) => i === sightingIndex ? sightingUpdates : sighting);
+        this._sightings.next(editedSightingArr);
+      }),
+      switchMap(() => {
+        return this.http.patch(
+          `${this.databaseURL}/${sightingId}`,
+          {...sightingUpdates}
         );
       })
     );

@@ -1,3 +1,20 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-menu side="start" menuId="m1" contentId="main-menu">
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>WildTypes</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content color="primary">
+      <ion-list>
+        <ion-menu-toggle menu="m1">
+          <ion-item color="primary" lines="none" (click)="onLogout()" button>
+            <ion-icon name="exit" slot="start"></ion-icon>
+            <ion-label>Logout</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="main-menu"></ion-router-outlet>
 </ion-app>

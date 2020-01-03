@@ -9,15 +9,15 @@ const routes: Routes = [
     component: SightingsPage
   },
   {
-    path: 'new-sighting',
+    path: 'new',
     loadChildren: () => import('./new-sighting/new-sighting.module').then( m => m.NewSightingPageModule)
   },
   {
-    path: 'edit-sighting',
+    path: 'edit',
     loadChildren: () => import('./edit-sighting/edit-sighting.module').then( m => m.EditSightingPageModule)
   },
   {
-    path: 'sighting-detail',
+    path: ':sightingId',
     loadChildren: () => import('./sighting-detail/sighting-detail.module').then( m => m.SightingDetailPageModule)
   }
 ];

@@ -31,14 +31,39 @@ h1 {
     font-size: 3rem;
 }
 
+hr {
+    border-width: 0;
+    border-top: 1px solid var(--ion-color-dark);
+}
+
 .small-logo {
     width: 4rem;
     margin: 0.5rem;
 }
 
+.logo-offset {
+    position: relative;
+    left: 0.3rem;
+}
+
+.centered-h {
+    display: flex;
+    justify-content: center;
+}
+
+.centered-v {
+    display: flex;
+    align-items: center;
+}
+
+.flex-dir-col{
+    flex-direction: column;
+}
+
 .btn {
-    width: 12rem;
+    min-width: 12rem;
     height: 2rem;
+    padding: 0 0.5rem;
 
     font-size: 1.125rem;
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SightingsService } from '../sightings/sightings.service';
 
 @Component({
   selector: 'app-welcome',
@@ -7,13 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WelcomePage implements OnInit {
 
-  logo: string;
+  logoSvg: string;
 
-  constructor() {
-  }
+  constructor() { }
 
   ngOnInit() {
-    this.logo = '/assets/logo.svg';
+    this.logoSvg = '/assets/logo.svg';
   }
 
 }

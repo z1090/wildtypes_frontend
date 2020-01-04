@@ -46,7 +46,7 @@ export class EditSightingPage implements OnInit, OnDestroy {
             this.ratingValue = sighting.useageRating.toString();
             this.form = new FormGroup({
               tName: new FormControl(sighting.typefaceName, {
-                updateOn: 'blur',
+                updateOn: 'change',
                 validators: [Validators.required]
               }),
               certainty: new FormControl(sighting.certainty, {
@@ -54,11 +54,11 @@ export class EditSightingPage implements OnInit, OnDestroy {
                 validators: [Validators.required]
               }),
               bName: new FormControl(sighting.businessName, {
-                updateOn: 'blur',
+                updateOn: 'change',
                 validators: [Validators.required]
               }),
               category: new FormControl(sighting.category, {
-                updateOn: 'blur',
+                updateOn: 'change',
                 validators: [Validators.required]
               }),
               rating: new FormControl(sighting.useageRating, {
@@ -66,7 +66,7 @@ export class EditSightingPage implements OnInit, OnDestroy {
                 validators: [Validators.required]
               }),
               location: new FormControl(sighting.location.address, {
-                updateOn: 'blur',
+                updateOn: 'change',
                 validators: [Validators.required]
               }),
             });
@@ -80,7 +80,7 @@ export class EditSightingPage implements OnInit, OnDestroy {
             }}]
           }).then(alertEl => {
             alertEl.present();
-          })
+          });
         });
     });
   }
@@ -111,6 +111,30 @@ export class EditSightingPage implements OnInit, OnDestroy {
         this.navCtrl.navigateBack(['/', 'sightings', this.sighting.id]);
         this.loadingCtrl.dismiss();
       });
+  }
+
+  onDeleteSighting() {
+    this.alertCtrl.create({
+      header: 'Delete',
+      message: 'Are you sure?',
+      buttons: [
+        {text: 'Cancel', handler: () => {}},
+        {text: 'Okay', handler: () => {
+        this.loadingCtrl.create({
+          message: 'Deleting...'
+        }).then(loadingEL => {
+          loadingEL.present();
+        });
+        this.sightingsService.deleteSighting(this.sighting.id)
+        .subscribe(() => {
+          this.navCtrl.navigateBack('/sightings');
+          this.loadingCtrl.dismiss();
+        });
+        }},
+      ]
+    }).then(alertEl => {
+      alertEl.present();
+    });
   }
 
   ngOnDestroy() {

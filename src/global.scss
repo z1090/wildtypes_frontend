@@ -9,6 +9,12 @@
  * https://ionicframework.com/docs/layout/global-stylesheets
  */
 
+ @import url('https://fonts.googleapis.com/css?family=Prata&display=swap');
+ @import url('https://fonts.googleapis.com/css?family=Rufina&display=swap');
+ @import url('https://fonts.googleapis.com/css?family=Suranna&display=swap');
+ @import url('https://fonts.googleapis.com/css?family=Oranienbaum&display=swap');
+
+
 /* Core CSS required for Ionic components to work properly */
 @import "~@ionic/angular/css/core.css";
 
@@ -26,9 +32,17 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 
+
+// h1 {
+//     font-family: 'Didot', serif;
+//     font-size: 3rem;
+// }
+
 h1 {
-    font-family: 'Didot';
-    font-size: 3rem;
+    margin-top: 0.75rem;
+    font-family: 'Suranna', serif;
+    font-size: 3.6rem;
+    letter-spacing: 0.25rem;
 }
 
 hr {
@@ -36,14 +50,28 @@ hr {
     border-top: 1px solid var(--ion-color-dark);
 }
 
+.bg-color {
+    background-color: var(--ion-color-background);
+}
+
 .small-logo {
     width: 4rem;
     margin: 0.5rem;
 }
 
-.logo-offset {
+.lrg-logo {
+    width: 10.75rem;
+    margin: 0.5rem;
+}
+
+.sm-logo-offset {
     position: relative;
     left: 0.3rem;
+}
+
+.lg-logo-offset {
+    position: relative;
+    left: 3.5rem;
 }
 
 .centered-h {

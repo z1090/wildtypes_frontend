@@ -21,7 +21,7 @@ export class NewSightingPage implements OnInit {
   ngOnInit() {
     this.form = new FormGroup({
       tName: new FormControl(null, {
-        updateOn: 'blur',
+        updateOn: 'change',
         validators: [Validators.required]
       }),
       certainty: new FormControl(null, {
@@ -29,11 +29,11 @@ export class NewSightingPage implements OnInit {
         validators: [Validators.required]
       }),
       bName: new FormControl(null, {
-        updateOn: 'blur',
+        updateOn: 'change',
         validators: [Validators.required]
       }),
       category: new FormControl(null, {
-        updateOn: 'blur',
+        updateOn: 'change',
         validators: [Validators.required]
       }),
       rating: new FormControl(null, {
@@ -41,7 +41,7 @@ export class NewSightingPage implements OnInit {
         validators: [Validators.required]
       }),
       location: new FormControl(null, {
-        updateOn: 'blur',
+        updateOn: 'change',
         validators: [Validators.required]
       }),
     });
@@ -56,25 +56,21 @@ export class NewSightingPage implements OnInit {
       message: 'Adding Sighting...'
     }).then(loadingEL => {
       loadingEL.present();
-    });
-    this.sightingsService.addSighting(
-      this.form.value.tName,
-      +this.form.value.certainty,
-      this.form.value.bName,
-      this.form.value.category,
-      +this.form.value.rating,
-      { lat: 123, lng: 456, address: this.form.value.location, mapImage: mapImg},
-      img1,
-    )
-    .subscribe(() => {
-      this.loadingCtrl.dismiss();
-      this.form.reset();
-      this.router.navigate(['/sightings']);
+
+      this.sightingsService.addSighting(
+        this.form.value.tName,
+        +this.form.value.certainty,
+        this.form.value.bName,
+        this.form.value.category,
+        +this.form.value.rating,
+        { lat: 123, lng: 456, address: this.form.value.location, mapImage: mapImg},
+        img1,
+      )
+      .subscribe(() => {
+        this.loadingCtrl.dismiss();
+        this.form.reset();
+        this.router.navigate(['/sightings']);
+      });
     });
   }
-
-  // certaintyChanged($event) {
-  //   console.log('Certainty: ', $event);
-  // }
-
 }

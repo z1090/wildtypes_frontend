@@ -12,3 +12,40 @@
 .btn {
     font-size: 0.875rem;
 }
+
+.search-visible {
+    color: var(--ion-color-primary);
+    background-color: var(--ion-color-background-shade);
+}
+
+.md .search-visible  {
+    border-radius: 50%;
+}
+
+.ios .search-visible  {
+    border-radius: 5px;
+}
+
+
+.searchbar-hidden {
+    height: 0;
+    transition: height .25s ease-in-out;
+    ion-col {
+        ion-searchbar {
+            opacity: 0;
+            transition: opacity .25s ease-in-out;
+        }
+    }
+
+}
+
+.searchbar-visible {
+    height: 70px;
+    transition: height .25s ease-in-out;
+    ion-col {
+        ion-searchbar {
+            opacity: 1;
+            transition: opacity .25s ease-in-out;
+        }
+    }
+}

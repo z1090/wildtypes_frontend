@@ -62,6 +62,16 @@ interface SightingDBData {
   photo: string;
 }
 
+interface SightingUpdates {
+  typefaceName?: string;
+  certainty?: number;
+  businessName?: string;
+  category?: string;
+  useageRating?: number;
+  location?: SightingLocation;
+  photo?: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -163,8 +173,7 @@ export class SightingsService {
     );
   }
 
-  // editSighting(sightingUpdates: Sighting) {
-  editSighting(sightingUpdates: any, sightingId: string) {
+  editSighting(sightingUpdates: SightingUpdates, sightingId: string) {
     return this.sightings.pipe(
       take(1),
       switchMap(sightings => {
@@ -175,8 +184,10 @@ export class SightingsService {
         }
       }),
       tap(sightings => {
-        const sightingIndex = sightings.findIndex(sighting => sighting.id === sightingUpdates.id);
-        const editedSightingArr = sightings.map((sighting, i) => i === sightingIndex ? sightingUpdates : sighting);
+        const sightingIndex = sightings.findIndex(sighting => sighting.id === sightingId);
+        const editedSightingArr = sightings.map((sighting, i) => {
+          return i === sightingIndex ? {...sighting, ...sightingUpdates} : sighting;
+        });
         this._sightings.next(editedSightingArr);
       }),
       switchMap(() => {
@@ -184,6 +195,27 @@ export class SightingsService {
           `${this.databaseURL}/${sightingId}`,
           {...sightingUpdates}
         );
+      })
+    );
+  }
+
+  deleteSighting(sightingId: string) {
+    return this.sightings.pipe(
+      take(1),
+      switchMap(sightings => {
+        if (!sightings || sightings.length <= 0) {
+          return this.fetchSightings();
+        } else {
+          return of(sightings);
+        }
+      }),
+      tap(sightings => {
+        const filteredSightingArr = sightings.filter(sighting => sighting.id !== sightingId);
+        console.log(filteredSightingArr);
+        this._sightings.next(filteredSightingArr);
+      }),
+      switchMap(() => {
+        return this.http.delete(`${this.databaseURL}/${sightingId}`);
       })
     );
   }

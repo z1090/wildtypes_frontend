@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { SightingsPage } from './sightings.page';
+import { AuthGuard } from '../auth/auth.guard';
 
 const routes: Routes = [
   {
@@ -10,15 +11,18 @@ const routes: Routes = [
   },
   {
     path: 'new',
-    loadChildren: () => import('./new-sighting/new-sighting.module').then( m => m.NewSightingPageModule)
+    loadChildren: () => import('./new-sighting/new-sighting.module').then( m => m.NewSightingPageModule),
+    canLoad: [AuthGuard]
   },
   {
     path: 'edit/:sightingId',
-    loadChildren: () => import('./edit-sighting/edit-sighting.module').then( m => m.EditSightingPageModule)
+    loadChildren: () => import('./edit-sighting/edit-sighting.module').then( m => m.EditSightingPageModule),
+    canLoad: [AuthGuard]
   },
   {
     path: ':sightingId',
-    loadChildren: () => import('./sighting-detail/sighting-detail.module').then( m => m.SightingDetailPageModule)
+    loadChildren: () => import('./sighting-detail/sighting-detail.module').then( m => m.SightingDetailPageModule),
+    canLoad: [AuthGuard]
   }
 ];
 

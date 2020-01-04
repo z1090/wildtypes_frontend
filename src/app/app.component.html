@@ -1,12 +1,12 @@
 <ion-app>
   <ion-menu side="start" menuId="m1" contentId="main-menu">
-    <ion-header>
-      <ion-toolbar color="primary">
+    <ion-header no-border>
+      <ion-toolbar color="primary" no-border>
         <ion-title>WildTypes</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content color="primary">
-      <ion-list>
+      <ion-list class="ion-no-padding">
         <ion-menu-toggle menu="m1">
           <ion-item color="primary" lines="none" (click)="onLogout()" button>
             <ion-icon name="exit" slot="start"></ion-icon>

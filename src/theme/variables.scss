@@ -1,6 +1,8 @@
 // Ionic Variables and Theming. For more info, please see:
 // http://ionicframework.com/docs/theming/
 
+@import url('https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap');
+
 /** Ionic CSS Variables **/
 :root {
   --ion-color-primary: #A40000;
@@ -73,7 +75,7 @@
   --ion-color-background-shade: #d5d2c9;
   --ion-color-background-tint: #f3f1e7;
 
-  --ion-font-family: 'Avenir Next'
+  --ion-font-family: 'Nunito Sans';
 }
 
 .ion-color-background {

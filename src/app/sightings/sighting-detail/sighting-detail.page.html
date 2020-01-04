@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header no-border>
   <ion-toolbar color="background">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/sightings"></ion-back-button>
@@ -73,7 +73,7 @@
       <ion-col>
         <hr>
         <ion-text class="added-text" color="dark">
-          <p>Added by <ion-text color="secondary">{{sighting.userId}}</ion-text> on <ion-text color="secondary">{{ sighting.date | date }}</ion-text>.</p>
+          <p>Added by <ion-text color="secondary">{{sighting.userId}}</ion-text> on <ion-text color="secondary">{{ sighting.date | date: 'MMM dd, yyyy' }}</ion-text>.</p>
         </ion-text>
       </ion-col>
     </ion-row>

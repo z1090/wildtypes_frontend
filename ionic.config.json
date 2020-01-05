@@ -1,5 +1,7 @@
 {
   "name": "wild_types",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

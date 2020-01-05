@@ -61,7 +61,7 @@
     <ion-row *ngIf="!isLoading && shownSightings && shownSightings.length > 0">
       <ion-col>
         <ion-virtual-scroll [items]="shownSightings" approxItemHeight="70px" >
-          <ion-item [routerLink]="['/', 'sightings', sighting.id]" *virtualItem="let sighting" color="background" detail>
+          <ion-item class="ion-no-padding" [routerLink]="['/', 'sightings', sighting.id]" *virtualItem="let sighting" color="background" detail>
             <ion-avatar slot="start">
               <ion-img [src]="sighting.photo"></ion-img>
             </ion-avatar>

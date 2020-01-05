@@ -23,7 +23,7 @@
         <ion-col size-sm="6" offset-sm="3">
           <ion-item color="background">
             <ion-label position="stacked">typeface name</ion-label>
-            <ion-input type="text" autocomplete formControlName="tName"></ion-input>
+            <ion-input type="text" formControlName="tName"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -41,7 +41,7 @@
         <ion-col size-sm="6" offset-sm="3">
           <ion-item color="background">
             <ion-label position="stacked">business name</ion-label>
-            <ion-input type="text" autocomplete formControlName="bName"></ion-input>
+            <ion-input type="text" formControlName="bName"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -55,29 +55,43 @@
               <ion-select-option value="Poster">Poster</ion-select-option>
               <ion-select-option value="Menu">Menu</ion-select-option>
               <ion-select-option value="Billboard">Billboard</ion-select-option>
+              <ion-select-option value="Other">Other...</ion-select-option>
             </ion-select>
           </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size-sm="6" offset-sm="3">
-          <ion-item color="background">
-            <ion-label position="stacked">suitable/effective usage</ion-label>
-            <ion-range min="1" max="5" snaps ticks="false" color="dark" [(ngModel)]="ratingValue" formControlName="rating"></ion-range>
+          <ion-item color="background" *ngIf="form.value.category === 'Other'">
+            <ion-label position="stacked">other signage/item category</ion-label>
+            <ion-input type="text" formControlName="categoryOther"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col size-sm="6" offset-sm="3">
+          <ion-label position="stacked" class="ion-padding">suitable/effective usage</ion-label>
           <ion-item color="background">
+            <ion-range min="1" max="5" snaps ticks="false" color="dark" [(ngModel)]="ratingValue" formControlName="rating">
+              <ion-label slot="end">{{ratingValue}}/5</ion-label>
+            </ion-range>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <app-address-picker (addressEmitter)="onNewAddress($event)" (locationObject)="onRecievedLocation($event)"></app-address-picker>
+          <!-- <ion-item color="background">
             <ion-label position="stacked">location</ion-label>
-            <ion-input type="text" autocomplete formControlName="location"></ion-input>
-          </ion-item>
+            <ion-input type="text" formControlName="location"></ion-input>
+          </ion-item> -->
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-label position="stacked">Photo</ion-label>
+          <app-photo-selector [currentPhoto]="form.get('photo').value" (photoPick)="onPickedPhoto($event)"></app-photo-selector>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col class="ion-text-center ion-padding">
-          <ion-button class="btn" color="secondary" fill="outline" (click)="onCreateSighting()" [disabled]="!form.valid">
+          <ion-button class="btn" color="secondary" fill="outline" (click)="checkAddress()" [disabled]="!form.valid">
             Submit
           </ion-button>
         </ion-col>

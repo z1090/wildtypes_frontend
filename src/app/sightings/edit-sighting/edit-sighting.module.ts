@@ -8,12 +8,16 @@ import { EditSightingPageRoutingModule } from './edit-sighting-routing.module';
 
 import { EditSightingPage } from './edit-sighting.page';
 
+import { ComponentsModule } from '../../components/components.module';
+
+
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
     IonicModule,
-    EditSightingPageRoutingModule
+    EditSightingPageRoutingModule,
+    ComponentsModule
   ],
   declarations: [EditSightingPage]
 })

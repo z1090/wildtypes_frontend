@@ -1,22 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { SightingsService } from '../sightings.service';
 import { LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
-import { img1, mapImg } from '../test-base64-images';
+import { SightingLocation } from '../location.model';
+
+import { AddressService } from 'src/app/components/address-picker/address.service';
 
 @Component({
   selector: 'app-new-sighting',
   templateUrl: './new-sighting.page.html',
   styleUrls: ['./new-sighting.page.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewSightingPage implements OnInit {
   form: FormGroup;
-  certaintyValue = '0';
-  ratingValue = '3';
+  certaintyValue = 0;
+  ratingValue = 3;
+  recievedAddress: string;
+  recievedLocation: SightingLocation;
 
-  constructor(private sightingsService: SightingsService, private loadingCtrl: LoadingController, private router: Router) { }
+  constructor(
+    private sightingsService: SightingsService,
+    private addressService: AddressService,
+    private loadingCtrl: LoadingController,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.form = new FormGroup({
@@ -24,7 +34,7 @@ export class NewSightingPage implements OnInit {
         updateOn: 'change',
         validators: [Validators.required]
       }),
-      certainty: new FormControl(null, {
+      certainty: new FormControl(0, {
         updateOn: 'change',
         validators: [Validators.required]
       }),
@@ -36,7 +46,10 @@ export class NewSightingPage implements OnInit {
         updateOn: 'change',
         validators: [Validators.required]
       }),
-      rating: new FormControl(null, {
+      categoryOther: new FormControl(null, {
+        updateOn: 'change',
+      }),
+      rating: new FormControl(3, {
         updateOn: 'change',
         validators: [Validators.required]
       }),
@@ -44,14 +57,22 @@ export class NewSightingPage implements OnInit {
         updateOn: 'change',
         validators: [Validators.required]
       }),
+      photo: new FormControl(null, {
+        validators: [Validators.required]
+      })
     });
+    this.setCategoryValidators();
   }
 
-  onCreateSighting() {
+  onCheckForm() {
     if (!this.form.valid) {
       return;
     }
-    console.log(this.form.value);
+    this.checkAddress();
+  }
+
+  createSighting() {
+    const category = this.form.value.categoryOther ? this.form.value.categoryOther : this.form.value.category;
     this.loadingCtrl.create({
       message: 'Adding Sighting...'
     }).then(loadingEL => {
@@ -61,16 +82,53 @@ export class NewSightingPage implements OnInit {
         this.form.value.tName,
         +this.form.value.certainty,
         this.form.value.bName,
-        this.form.value.category,
+        category,
         +this.form.value.rating,
-        { lat: 123, lng: 456, address: this.form.value.location, mapImage: mapImg},
-        img1,
+        this.recievedLocation,
+        this.form.value.photo,
       )
       .subscribe(() => {
         this.loadingCtrl.dismiss();
         this.form.reset();
+        this.form.get('certainty').setValue(0);
+        this.form.get('rating').setValue(3);
         this.router.navigate(['/sightings']);
       });
     });
+  }
+
+  onPickedPhoto(imageData: string) {
+    this.form.patchValue({photo: imageData});
+  }
+
+  onRecievedLocation(recievedLocation: SightingLocation) {
+    this.recievedLocation = recievedLocation;
+  }
+
+  onNewAddress(newAddress: string) {
+    this.recievedAddress = newAddress;
+    this.form.patchValue({location: newAddress});
+  }
+
+  checkAddress() {
+    if (this.recievedLocation && (this.recievedLocation.address === this.recievedAddress)) {
+      return this.createSighting();
+    }
+    this.addressService.createLocationfromAddress(this.recievedAddress).subscribe((newLocation) => {
+      this.recievedLocation = newLocation;
+      this.createSighting();
+    });
+  }
+
+  setCategoryValidators() {
+    this.form.get('category').valueChanges
+      .subscribe(category => {
+        if (category === 'Other') {
+          this.form.get('categoryOther').setValidators([Validators.required]);
+        } else {
+          this.form.get('categoryOther').setValidators(null);
+          this.form.get('categoryOther').setValue(null);
+        }
+      });
   }
 }

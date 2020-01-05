@@ -77,7 +77,9 @@ interface SightingUpdates {
 })
 export class SightingsService {
   private _sightings = new BehaviorSubject<Sighting[]>([]);
-  private databaseURL = 'http://127.0.0.1:3000/sightings';
+  // private databaseURL = 'http://127.0.0.1:3000/sightings';
+  // private databaseURL = 'http://10.0.2.2:3000/sightings';
+  private databaseURL = 'http://192.168.1.194:3000/sightings';
 
   get sightings() {
     return this._sightings.asObservable();

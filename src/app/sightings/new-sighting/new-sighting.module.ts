@@ -8,12 +8,15 @@ import { NewSightingPageRoutingModule } from './new-sighting-routing.module';
 
 import { NewSightingPage } from './new-sighting.page';
 
+import { ComponentsModule } from '../../components/components.module';
+
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
     IonicModule,
-    NewSightingPageRoutingModule
+    NewSightingPageRoutingModule,
+    ComponentsModule
   ],
   declarations: [NewSightingPage]
 })

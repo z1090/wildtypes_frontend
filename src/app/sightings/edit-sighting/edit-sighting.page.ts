@@ -69,6 +69,9 @@ export class EditSightingPage implements OnInit, OnDestroy {
                 updateOn: 'change',
                 validators: [Validators.required]
               }),
+              photo: new FormControl(sighting.photo, {
+                validators: [Validators.required]
+              })
             });
             this.isLoading = false;
         }, error => {
@@ -102,7 +105,7 @@ export class EditSightingPage implements OnInit, OnDestroy {
       category: this.form.value.category !== this.sighting.category ? this.form.value.category : null,
       useageRating: +this.form.value.rating !== this.sighting.useageRating ? +this.form.value.rating : null,
       location: { lat: 123, lng: 456, address: this.form.value.location, mapImage: mapImg},
-      photo: img1 !== this.sighting.photo ? img1 : null,
+      photo: this.form.value.photo !== this.sighting.photo ? this.form.value.photo : null,
     };
     Object.entries(sightingUpdates).forEach(update => (update[1] === null ? delete sightingUpdates[update[0]] : 0));
     console.log(sightingUpdates);
@@ -135,6 +138,10 @@ export class EditSightingPage implements OnInit, OnDestroy {
     }).then(alertEl => {
       alertEl.present();
     });
+  }
+
+  onPickedPhoto(imageData: string) {
+    this.form.patchValue({photo: imageData});
   }
 
   ngOnDestroy() {

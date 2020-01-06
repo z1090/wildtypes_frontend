@@ -9,10 +9,7 @@
  * https://ionicframework.com/docs/layout/global-stylesheets
  */
 
- @import url('https://fonts.googleapis.com/css?family=Prata&display=swap');
- @import url('https://fonts.googleapis.com/css?family=Rufina&display=swap');
  @import url('https://fonts.googleapis.com/css?family=Suranna&display=swap');
- @import url('https://fonts.googleapis.com/css?family=Oranienbaum&display=swap');
 
 
 /* Core CSS required for Ionic components to work properly */
@@ -48,6 +45,17 @@ h1 {
 hr {
     border-width: 0;
     border-top: 1px solid var(--ion-color-dark);
+}
+
+ion-item.form-input {
+    ion-label.stacked-label {
+        font-size: 1.3rem;
+        color: var(--ion-color-secondary);
+    }
+}
+
+.faux-stacked-label {
+    padding-top: 1.15rem;
 }
 
 .bg-color {

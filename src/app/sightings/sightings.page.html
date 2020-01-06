@@ -16,25 +16,25 @@
     <!-- <ion-row *ngIf="searchVisible"> -->
     <!-- <ion-row> -->
     <ion-row [ngClass]="searchVisible ? 'searchbar-visible' : 'searchbar-hidden'">
-      <ion-col>
+      <ion-col size-sm="6" offset-sm="3">
         <!-- <ion-searchbar [ngClass]="searchVisible ? 'searchbar-visible' : 'searchbar-hidden'" #autofocus inputmode="text" (ionClear)="clearSearch()" mode="ios" showCancelButton="never" (search)="searching($event.target.value)"></ion-searchbar> -->
         <ion-searchbar #autofocus inputmode="text" (ionClear)="clearSearch()" mode="ios" showCancelButton="never" (search)="searching($event.target.value)"></ion-searchbar>
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col class="centered-h">
+      <ion-col size-sm="6" offset-sm="3" class="centered-h">
         <ion-img class="small-logo sm-logo-offset" [src]="logoSvg"></ion-img>
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col class="ion-text-center">
+      <ion-col size-sm="6" offset-sm="3" class="ion-text-center">
         <ion-text color="secondary">
           <h1>{{ pageTitle }}</h1>
         </ion-text>
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col>
+      <ion-col size-sm="6" offset-sm="3">
         <ion-segment (ionChange)="onFilterUpdate($event.detail.value)">
           <ion-segment-button value="yours" checked>Yours</ion-segment-button>
           <ion-segment-button value="all">All</ion-segment-button>
@@ -48,18 +48,18 @@
   <ion-grid class="ion-padding main-grid">
 
     <ion-row *ngIf="isLoading" style="flex-grow: 1;">
-      <ion-col class="centered-h centered-v flex-dir-col ion-text-center">
+      <ion-col size-sm="6" offset-sm="3" class="centered-h centered-v flex-dir-col ion-text-center">
         <ion-spinner color="primary" class="ion-text-center"></ion-spinner>
       </ion-col>
     </ion-row>
     <ion-row *ngIf="!isLoading && (!shownSightings || shownSightings.length === 0)" style="flex-grow: 1;">
-      <ion-col class="centered-h centered-v flex-dir-col ion-text-center">
+      <ion-col size-sm="6" offset-sm="3" class="centered-h centered-v flex-dir-col ion-text-center">
         <ion-img class="plus-icon" [src]="plusSvg"></ion-img>
         <ion-button class="btn" color="secondary" fill="outline" routerLink="/sightings/new">Add a new contribution</ion-button>
       </ion-col>
     </ion-row>
     <ion-row *ngIf="!isLoading && shownSightings && shownSightings.length > 0">
-      <ion-col>
+      <ion-col size-sm="6" offset-sm="3">
         <ion-virtual-scroll [items]="shownSightings" approxItemHeight="70px" >
           <ion-item class="ion-no-padding" [routerLink]="['/', 'sightings', sighting.id]" *virtualItem="let sighting" color="background" detail>
             <ion-avatar slot="start">
@@ -69,7 +69,7 @@
               <h2>{{ sighting.typefaceName }}</h2>
               <ion-text color="dark">
                 <!-- <p>{{ sighting.location.address }}</p> -->
-                <p>{{ sighting.userId }}</p>
+                <p>{{ sighting.location.address }}</p>
               </ion-text>
             </ion-label>
           </ion-item>

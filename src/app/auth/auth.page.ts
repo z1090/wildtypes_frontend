@@ -24,11 +24,11 @@ export class AuthPage implements OnInit {
       }),
       email: new FormControl(null, {
         updateOn: 'change',
-        // validators: [Validators.required]
+        validators: [Validators.required, Validators.email]
       }),
       password: new FormControl(null, {
         updateOn: 'change',
-        // validators: [Validators.required]
+        validators: [Validators.required, Validators.minLength(8)]
       }),
     });
   }

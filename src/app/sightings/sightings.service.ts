@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, of } from 'rxjs';
 import { take, map, tap, delay, filter, switchMap } from 'rxjs/operators';
 
+import { environment } from '../../environments/environment';
+
 
 import { Sighting } from './sighting.model';
 import { AuthService } from '../auth/auth.service';
@@ -77,9 +79,7 @@ interface SightingUpdates {
 })
 export class SightingsService {
   private _sightings = new BehaviorSubject<Sighting[]>([]);
-  // private databaseURL = 'http://127.0.0.1:3000/sightings';
-  // private databaseURL = 'http://10.0.2.2:3000/sightings';
-  private databaseURL = 'http://192.168.1.194:3000/sightings';
+
 
   get sightings() {
     return this._sightings.asObservable();
@@ -88,7 +88,7 @@ export class SightingsService {
   constructor(private authService: AuthService, private http: HttpClient) { }
 
   fetchSightings() {
-    return this.http.get<SightingDBData[]>(this.databaseURL)
+    return this.http.get<SightingDBData[]>(environment.databaseURL)
     .pipe(
       map(resData => {
         return resData.map(sighting => new Sighting(
@@ -116,7 +116,7 @@ export class SightingsService {
   }
 
   getSighting(id: string) {
-    return this.http.get<SightingDBData>(`${this.databaseURL}/${id}`)
+    return this.http.get<SightingDBData>(`${environment.databaseURL}/${id}`)
     .pipe(
       map(sighting => {
         return new Sighting(
@@ -162,7 +162,7 @@ export class SightingsService {
       location,
       photo
     );
-    return this.http.post<SightingDBData>(this.databaseURL, {...newSighting, id: null})
+    return this.http.post<SightingDBData>(environment.databaseURL, {...newSighting, id: null})
     .pipe(switchMap(resData => {
       idFromDB = resData._id;
       return this.sightings;
@@ -194,7 +194,7 @@ export class SightingsService {
       }),
       switchMap(() => {
         return this.http.patch(
-          `${this.databaseURL}/${sightingId}`,
+          `${environment.databaseURL}/${sightingId}`,
           {...sightingUpdates}
         );
       })
@@ -217,7 +217,7 @@ export class SightingsService {
         this._sightings.next(filteredSightingArr);
       }),
       switchMap(() => {
-        return this.http.delete(`${this.databaseURL}/${sightingId}`);
+        return this.http.delete(`${environment.databaseURL}/${sightingId}`);
       })
     );
   }

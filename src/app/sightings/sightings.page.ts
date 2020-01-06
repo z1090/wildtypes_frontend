@@ -18,6 +18,7 @@ export class SightingsPage implements OnInit, OnDestroy {
   searchedSightings: Sighting[];
   shownSightings: Sighting[];
   searchVisible = false;
+  lastSearchTerm: string;
   isLoading = false;
   pageTitle = 'Contributions';
   private sightingsSub: Subscription;
@@ -30,7 +31,7 @@ export class SightingsPage implements OnInit, OnDestroy {
     this.logoSvg = '/assets/logo.svg';
     this.plusSvg = '/assets/plus.svg';
     this.sightingsSub = this.sightingsService.sightings.subscribe(sightings => {
-      this.loadedSightings = sightings;
+      this.loadedSightings = sightings.reverse();
       this.searchedSightings = sightings;
       this.onFilterUpdate(this.filter);
     });
@@ -39,6 +40,9 @@ export class SightingsPage implements OnInit, OnDestroy {
   ionViewWillEnter() {
     this.isLoading = true;
     this.sightingsService.fetchSightings().subscribe(() => {
+      if (this.searchVisible) {
+        this.searching(this.lastSearchTerm);
+      }
       this.isLoading = false;
     });
   }
@@ -58,6 +62,7 @@ export class SightingsPage implements OnInit, OnDestroy {
   }
 
   searching(searchTerm) {
+    this.lastSearchTerm = searchTerm;
     this.pageTitle = 'Search';
     this.searchedSightings = this.loadedSightings.filter(sighting => {
       return Object.keys(sighting).some(key => {

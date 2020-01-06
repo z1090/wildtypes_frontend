@@ -9,7 +9,7 @@
 <ion-content color="background">
   <ion-grid class="ion-padding details-grid">
     <ion-row>
-      <ion-col class="ion-text-center">
+      <ion-col size-sm="6" offset-sm="3" class="ion-text-center">
         <ion-text color="secondary">
           <h1>Add New</h1>
         </ion-text>
@@ -21,15 +21,15 @@
     <ion-grid>
       <ion-row>
         <ion-col size-sm="6" offset-sm="3">
-          <ion-item color="background">
-            <ion-label position="stacked">typeface name</ion-label>
+          <ion-item class="form-input" color="background">
+            <ion-label color="secondary" class="stacked-label" position="stacked">Typeface name</ion-label>
             <ion-input type="text" formControlName="tName"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col size-sm="6" offset-sm="3">
-          <ion-label position="stacked" class="ion-padding">certainty</ion-label>
+        <ion-col class="faux-stacked-label" size-sm="6" offset-sm="3">
+          <ion-label color="secondary" position="stacked" class="ion-padding">Certainty</ion-label>
           <ion-item color="background">
             <ion-range min="0" max="100" color="dark" [(ngModel)]="certaintyValue" formControlName="certainty">
               <ion-label slot="end">{{certaintyValue}}%</ion-label>
@@ -39,16 +39,16 @@
       </ion-row>
       <ion-row>
         <ion-col size-sm="6" offset-sm="3">
-          <ion-item color="background">
-            <ion-label position="stacked">business name</ion-label>
+          <ion-item class="form-input" color="background">
+            <ion-label color="secondary" class="stacked-label" position="stacked">Business name</ion-label>
             <ion-input type="text" formControlName="bName"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col size-sm="6" offset-sm="3">
-          <ion-item color="background">
-            <ion-label position="stacked">signage/item category</ion-label>
+          <ion-item class="form-input" color="background">
+            <ion-label class="stacked-label" position="stacked">Signage/item category</ion-label>
             <ion-select interface="action-sheet" formControlName="category">
               <ion-select-option value="Shop Sign">Shop Sign</ion-select-option>
               <ion-select-option value="Street Sign">Street Sign</ion-select-option>
@@ -58,15 +58,15 @@
               <ion-select-option value="Other">Other...</ion-select-option>
             </ion-select>
           </ion-item>
-          <ion-item color="background" *ngIf="form.value.category === 'Other'">
-            <ion-label position="stacked">other signage/item category</ion-label>
+          <ion-item class="form-input" color="background" *ngIf="form.value.category === 'Other'">
+            <ion-label class="stacked-label" position="stacked">Other signage/item category</ion-label>
             <ion-input type="text" formControlName="categoryOther"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col size-sm="6" offset-sm="3">
-          <ion-label position="stacked" class="ion-padding">suitable/effective usage</ion-label>
+        <ion-col class="faux-stacked-label" size-sm="6" offset-sm="3">
+          <ion-label color="secondary" position="stacked" class="ion-padding">Suitable/effective usage</ion-label>
           <ion-item color="background">
             <ion-range min="1" max="5" snaps ticks="false" color="dark" [(ngModel)]="ratingValue" formControlName="rating">
               <ion-label slot="end">{{ratingValue}}/5</ion-label>
@@ -75,22 +75,18 @@
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col size-sm="6" offset-sm="3">
-          <app-address-picker (addressEmitter)="onNewAddress($event)" (locationObject)="onRecievedLocation($event)"></app-address-picker>
-          <!-- <ion-item color="background">
-            <ion-label position="stacked">location</ion-label>
-            <ion-input type="text" formControlName="location"></ion-input>
-          </ion-item> -->
+        <ion-col class="ion-no-padding" size-sm="6" offset-sm="3">
+          <app-address-picker [currentAddress]="form.get('location').value" (addressEmitter)="onNewAddress($event)" (locationObject)="onRecievedLocation($event)"></app-address-picker>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col size-sm="6" offset-sm="3">
-          <ion-label position="stacked">Photo</ion-label>
+          <ion-label style="padding-left: 1.3rem; margin-bottom: 1rem; font-size: 1.3rem;" color="secondary" class="stacked-label item" position="stacked">Photo</ion-label>
           <app-photo-selector [currentPhoto]="form.get('photo').value" (photoPick)="onPickedPhoto($event)"></app-photo-selector>
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col class="ion-text-center ion-padding">
+        <ion-col size-sm="6" offset-sm="3" class="ion-text-center ion-padding">
           <ion-button class="btn" color="secondary" fill="outline" (click)="checkAddress()" [disabled]="!form.valid">
             Submit
           </ion-button>

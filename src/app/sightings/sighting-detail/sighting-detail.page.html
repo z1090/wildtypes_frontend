@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header no-border>
   <ion-toolbar color="background">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/sightings"></ion-back-button>
@@ -14,12 +14,12 @@
 <ion-content color="background">
   <ion-grid class="ion-padding details-grid">
     <ion-row *ngIf="searchVisible">
-      <ion-col>
+      <ion-col size-sm="6" offset-sm="3">
         <ion-searchbar showCancelButton="never"></ion-searchbar>
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col class="ion-text-center">
+      <ion-col size-sm="6" offset-sm="3" class="ion-text-center">
         <ion-text color="secondary">
           <h1>Details</h1>
         </ion-text>
@@ -29,7 +29,7 @@
   </ion-grid>
   <ion-grid *ngIf="!isLoading" class="ion-no-padding">
     <ion-row class="ion-padding typeface-row">
-      <ion-col>
+      <ion-col size-sm="6" offset-sm="3">
         <ion-text color="secondary">
           <h3>{{ sighting.typefaceName }}</h3>
         </ion-text>
@@ -39,12 +39,12 @@
       </ion-col>
     </ion-row>
     <ion-row class="ion-no-padding">
-      <ion-col class="ion-no-padding">
+      <ion-col size-sm="6" offset-sm="3" class="ion-no-padding">
         <ion-img [src]="sighting.photo" class="ion-no-padding"></ion-img>
       </ion-col>
     </ion-row>
     <ion-row class="ion-padding ratings-row rm-pad-btm">
-      <ion-col>
+      <ion-col size-sm="6" offset-sm="3">
         <ion-text color="dark">
           <p>Suitable/Effective Useage: <ion-text color="primary"><span>{{sighting.useageRating}}/5</span></ion-text></p>
           <p>Typeface Certainty: <ion-text color="primary"><span>{{sighting.certainty}}%</span></ion-text></p>
@@ -52,7 +52,7 @@
       </ion-col>
     </ion-row>
     <ion-row class="ion-padding rm-pad-top rm-pad-btm">
-      <ion-col>
+      <ion-col size-sm="6" offset-sm="3">
         <ion-text color="dark">
           <h4>Location</h4>
         </ion-text>
@@ -60,17 +60,17 @@
       </ion-col>
     </ion-row>
     <ion-row class="ion-padding rm-pad-top rm-pad-btm">
-      <ion-col size-sm="6">
+      <ion-col size-sm="3" offset-sm="3">
         <ion-text color="dark" *ngFor="let line of addressArr">
           <p class="address">{{ line }},</p>
         </ion-text>
       </ion-col>
-      <ion-col size-sm="6">
+      <ion-col size-sm="3">
         <ion-img class="map" [src]="sighting.location.mapImage"></ion-img>
       </ion-col>
     </ion-row>
     <ion-row class="ion-padding ratings-row rm-pad-top">
-      <ion-col>
+      <ion-col size-sm="6" offset-sm="3">
         <hr>
         <ion-text class="added-text" color="dark">
           <p>Added by <ion-text color="secondary">{{sighting.userId}}</ion-text> on <ion-text color="secondary">{{ sighting.date | date: 'MMM dd, yyyy' }}</ion-text>.</p>

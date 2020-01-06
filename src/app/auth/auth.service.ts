@@ -16,10 +16,7 @@ export class AuthService {
     return this._userId;
   }
 
-  constructor() {
-    this._userId = 'cabbage';
-    this._userIsAuthenticated = true;
-  }
+  constructor() { }
 
 
   login(userId: string) {

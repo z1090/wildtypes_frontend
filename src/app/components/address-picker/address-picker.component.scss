@@ -1,0 +1,30 @@
+.loc-btn-container{
+    display : flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.loc-btn {
+    width: 88%;
+    height: 2rem;
+    padding-left: 0.5rem;
+    padding-right: 0.2rem;
+    margin: none;
+
+    font-size: 0.75rem;
+
+    --border-radius: 1rem;
+}
+
+ion-item {
+    div {
+        --padding-start: 1rem;
+    }
+}
+
+ion-input {
+    --padding-start: 1rem;
+    input.native-input {
+        padding-left: 1rem !important;
+    }
+}

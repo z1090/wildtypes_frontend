@@ -1,18 +1,17 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { SightingsService } from '../sightings.service';
 import { LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 import { SightingLocation } from '../location.model';
 
+import { SightingsService } from '../sightings.service';
 import { AddressService } from 'src/app/components/address-picker/address.service';
 
 @Component({
   selector: 'app-new-sighting',
   templateUrl: './new-sighting.page.html',
   styleUrls: ['./new-sighting.page.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewSightingPage implements OnInit {
   form: FormGroup;
@@ -32,7 +31,7 @@ export class NewSightingPage implements OnInit {
     this.form = new FormGroup({
       tName: new FormControl(null, {
         updateOn: 'change',
-        validators: [Validators.required]
+        validators: [Validators.required, Validators.maxLength(80)]
       }),
       certainty: new FormControl(0, {
         updateOn: 'change',
@@ -40,7 +39,7 @@ export class NewSightingPage implements OnInit {
       }),
       bName: new FormControl(null, {
         updateOn: 'change',
-        validators: [Validators.required]
+        validators: [Validators.required, Validators.maxLength(80)]
       }),
       category: new FormControl(null, {
         updateOn: 'change',
@@ -48,6 +47,7 @@ export class NewSightingPage implements OnInit {
       }),
       categoryOther: new FormControl(null, {
         updateOn: 'change',
+        validators: [Validators.maxLength(50)]
       }),
       rating: new FormControl(3, {
         updateOn: 'change',
@@ -55,12 +55,13 @@ export class NewSightingPage implements OnInit {
       }),
       location: new FormControl(null, {
         updateOn: 'change',
-        validators: [Validators.required]
+        validators: [Validators.required, Validators.maxLength(100)]
       }),
       photo: new FormControl(null, {
         validators: [Validators.required]
       })
     });
+    this.form.setErrors(null);
     this.setCategoryValidators();
   }
 
@@ -114,9 +115,18 @@ export class NewSightingPage implements OnInit {
     if (this.recievedLocation && (this.recievedLocation.address === this.recievedAddress)) {
       return this.createSighting();
     }
-    this.addressService.createLocationfromAddress(this.recievedAddress).subscribe((newLocation) => {
-      this.recievedLocation = newLocation;
-      this.createSighting();
+    this.loadingCtrl.create({
+      message: 'Checking Address...'
+    }).then(loadingEL => {
+      loadingEL.present();
+
+      this.addressService.createLocationfromAddress(this.recievedAddress).subscribe((newLocation) => {
+        this.loadingCtrl.dismiss();
+        this.recievedLocation = newLocation;
+        this.createSighting();
+    });
+
+
     });
   }
 
@@ -125,9 +135,11 @@ export class NewSightingPage implements OnInit {
       .subscribe(category => {
         if (category === 'Other') {
           this.form.get('categoryOther').setValidators([Validators.required]);
+          this.form.get('categoryOther').updateValueAndValidity();
         } else {
           this.form.get('categoryOther').setValidators(null);
           this.form.get('categoryOther').setValue(null);
+          this.form.get('categoryOther').updateValueAndValidity();
         }
       });
   }

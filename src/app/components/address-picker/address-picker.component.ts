@@ -1,5 +1,5 @@
-import { Component, OnInit, Output, EventEmitter, OnChanges } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { Component, OnInit, Output, Input, EventEmitter, OnChanges } from '@angular/core';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { Plugins, Capacitor } from '@capacitor/core';
 import { HttpClient } from '@angular/common/http';
 import { map, switchMap } from 'rxjs/operators';
@@ -19,15 +19,20 @@ import { AddressService } from './address.service';
 export class AddressPickerComponent implements OnInit {
   @Output() locationObject = new EventEmitter<SightingLocation>();
   @Output() addressEmitter = new EventEmitter<string>();
+  @Input() currentAddress: string;
+
   enteredAddress: string;
 
   constructor(
     private addressService: AddressService,
     private http: HttpClient,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.enteredAddress = this.currentAddress;
+  }
 
 
   changedAddress(newAddress: string) {
@@ -39,16 +44,22 @@ export class AddressPickerComponent implements OnInit {
     if (!Capacitor.isPluginAvailable('Geolocation')) {
       return this.showErrorAlert();
     }
-    // this.isLoading = true;
-    Plugins.Geolocation.getCurrentPosition()
-      .then(position => {
-        this.createLocationObject(position.coords.latitude, position.coords.longitude);
-      })
-      .catch(err => {
-        // this.isLoading = false;
-        console.log(err);
-        this.showErrorAlert();
-      });
+
+    this.loadingCtrl.create({
+      message: 'Getting Address...'
+    }).then(loadingEL => {
+      loadingEL.present();
+
+      Plugins.Geolocation.getCurrentPosition()
+        .then(position => {
+          this.createLocationObject(position.coords.latitude, position.coords.longitude);
+        })
+        .catch(err => {
+          this.loadingCtrl.dismiss();
+          console.log(err);
+          this.showErrorAlert();
+        });
+    });
   }
 
   private showErrorAlert() {
@@ -65,7 +76,7 @@ export class AddressPickerComponent implements OnInit {
         this.enteredAddress = location.address;
         this.locationObject.emit(location);
         this.addressEmitter.emit(this.enteredAddress);
-        // this.isLoading = false;
+        this.loadingCtrl.dismiss();
       });
   }
 

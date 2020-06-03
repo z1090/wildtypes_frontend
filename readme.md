@@ -13,6 +13,8 @@ For the Front end, there is a mock authorisation system. Adding a real one seeme
 ## Running the project
 In the backend project Use `npm run mongo` to fire up the DB, then in a new terminal `npm start` to start the server. In the frontend project, run `ionic serve`.
 
+As this is an Ionic app, to get the 'app experience' turn on device emulation in the browser's dev tools and reload the page. However, the site does look fine in normal viewing mode.
+
 I think everything else should be fairly self-explanatory.
 
 ## Project Planning

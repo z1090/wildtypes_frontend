@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  googleMapsAPIKey: 'AIzaSyChoGAGBxceRCaPvqbKmsPnv5m1T4lznAI',
+  googleMapsAPIKey: '',
   databaseURL: 'http://127.0.0.1:3000/sightings',
   // databaseURL: 'http://192.168.1.194:3000/sightings', // access via wifi for real device testing.
 };
